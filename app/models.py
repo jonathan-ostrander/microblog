@@ -89,4 +89,8 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post %r>' % (self.body)
 
-whooshalchemy.whoosh_index(app, Post)
+from config import WHOOSH_ENABLED
+
+if WHOOSH_ENABLED:
+    import flask.ext.whooshalchemy as whooshalchemy
+    whooshalchemy.whoosh_index(app, Post)

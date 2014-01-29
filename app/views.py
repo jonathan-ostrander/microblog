@@ -12,6 +12,8 @@ from flask.ext.babel import gettext
 def load_user(id):
     return User.query.get(int(id))
 
+from config import WHOOSH_ENABLED
+
 @app.before_request
 def before_request():
     g.user = current_user
@@ -20,6 +22,8 @@ def before_request():
         db.session.add(g.user)
         db.session.commit()
         g.search_form = SearchForm()
+    g.locale = get_locale()
+    g.search_enabled = WHOOSH_ENABLED
     
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/index', methods = ['GET', 'POST'])
